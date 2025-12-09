@@ -136,9 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Attach event listener to the save button
   saveButton.addEventListener("click", saveContent);
 
-  // Handle tab key to insert 4 spaces instead of moving focus
-  const codeEditor = document.querySelector(".code-editor");
-  if (codeEditor) {
+  // Handle tab key to insert 4 spaces instead of moving focus for all textareas
+  const codeEditors = document.querySelectorAll("textarea");
+  codeEditors.forEach((codeEditor) => {
     codeEditor.addEventListener("keydown", function (e) {
       if (e.key === "Tab") {
         e.preventDefault();
@@ -155,5 +155,24 @@ document.addEventListener("DOMContentLoaded", () => {
         this.selectionStart = this.selectionEnd = start + spaces.length;
       }
     });
-  }
+  });
+});
+
+// Tab switching functionality
+document.querySelectorAll(".tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const tabName = tab.dataset.tab;
+
+    // Remove active class from all tabs and contents
+    document
+      .querySelectorAll(".tab")
+      .forEach((t) => t.classList.remove("active"));
+    document
+      .querySelectorAll(".tab-content")
+      .forEach((c) => c.classList.remove("active"));
+
+    // Add active class to clicked tab and corresponding content
+    tab.classList.add("active");
+    document.getElementById(`${tabName}-tab`).classList.add("active");
+  });
 });

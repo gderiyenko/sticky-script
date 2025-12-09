@@ -5,26 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sticky Code</title>
         <style>
-            /* Custom styles for the extension popup */
-            body {
-                width: 380px;
-                font-family: 'Inter', sans-serif;
-            }
-
-            textarea {
-                min-height: 150px;
-                width: 100%;
-                font-family: monospace;
-                font-size: 12px;
-                tab-size: 2;
-            }
-
-            .section-header {
-                border-left: 4px solid #3b82f6;
-                /* Blue-500 */
-                padding-left: 0.5rem;
-            }
-
             * {
                 margin: 0;
                 padding: 0;
@@ -32,167 +12,188 @@
             }
 
             body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-                padding: 20px;
+                width: 380px;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+                padding-bottom: 80px;
                 background: #f5f5f5;
             }
 
             .editor-container {
-                max-width: 900px;
-                margin: 0 auto;
                 background: #ffffff;
                 border-radius: 8px;
                 overflow: hidden;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             }
 
-            .editor-header {
+            /* Tab Styles */
+            .tabs {
+                display: flex;
                 background: #f8f9fa;
                 border-bottom: 1px solid #e1e4e8;
-                padding: 10px 16px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
             }
 
-            .editor-dot {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background: #fc5753;
-            }
-
-            .editor-dot:nth-child(2) {
-                background: #fdbc40;
-            }
-
-            .editor-dot:nth-child(3) {
-                background: #33c748;
-            }
-
-            .code-editor {
-                width: 100%;
-                min-height: 400px;
-                padding: 16px;
+            .tab {
+                flex: 1;
+                padding: 12px 16px;
+                background: none;
                 border: none;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                color: #586069;
+                border-bottom: 2px solid transparent;
+                transition: all 0.2s;
+            }
+
+            .tab:hover {
+                background: #e8eaed;
+            }
+
+            .tab.active {
+                color: #3b82f6;
+                border-bottom-color: #3b82f6;
+                background: #ffffff;
+            }
+
+            .tab-content {
+                display: none;
+                padding: 16px;
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            textarea {
+                font-size: 7px;
+                width: 100%;
+                min-height: 300px;
+                padding: 12px;
+                border: 1px solid #e1e4e8;
+                border-radius: 4px;
                 outline: none;
                 resize: vertical;
-
-                /* Code editor font */
-                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-                font-size: 14px;
+                font-family: "Consolas", "Monaco", "Courier New", monospace;
                 line-height: 1.6;
-
-                /* Light mode colors */
-                background: #ffffff;
+                background: #fafbfc;
                 color: #24292e;
-
-                /* Remove default textarea styling */
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-
-                /* Better text rendering */
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                text-rendering: optimizeLegibility;
-
-                /* Tab size */
-                tab-size: 4;
-                -moz-tab-size: 4;
+                tab-size: 2;
             }
 
-            .code-editor::selection {
+            textarea:focus {
+                border-color: #3b82f6;
+                background: #ffffff;
+            }
+
+            textarea::selection {
                 background: #b3d7ff;
             }
 
-            .code-editor:focus {
-                background: #fafbfc;
-            }
-
-            /* Line numbers effect with background */
-            .code-editor {
-                background-image:
-                    linear-gradient(to right, #f6f8fa 50px, transparent 50px);
-                padding-left: 60px;
-                background-attachment: local;
-            }
-
-            /* Optional: scrollbar styling */
-            .code-editor::-webkit-scrollbar {
-                width: 12px;
-                height: 12px;
-            }
-
-            .code-editor::-webkit-scrollbar-track {
-                background: #f6f8fa;
-            }
-
-            .code-editor::-webkit-scrollbar-thumb {
-                background: #d1d5da;
-                border-radius: 6px;
-            }
-
-            .code-editor::-webkit-scrollbar-thumb:hover {
-                background: #959da5;
-            }
-
-            .info {
-                padding: 16px;Ï
-                background: #f6f8fa;
+            /* Fixed Save Button */
+            .save-section {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 12px 20px;
+                background: #ffffff;
                 border-top: 1px solid #e1e4e8;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            #saveButton {
+                padding: 10px 20px;
+                font-size: 14px;
+                font-weight: 500;
+                color: white;
+                background: #3b82f6;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background 0.2s;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            #saveButton:hover {
+                background: #2563eb;
+            }
+
+            #saveButton:active {
+                transform: translateY(1px);
+            }
+
+            #statusMessage {
+                font-size: 12px;
+                color: #059669;
+                font-style: italic;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            #statusMessage.show {
+                opacity: 1;
+            }
+
+            header {
+                padding: 20px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid #e1e4e8;
+            }
+
+            h1 {
+                font-size: 18px;
+                font-weight: 600;
+                color: #24292e;
+                margin-bottom: 4px;
+            }
+
+            #currentUrlDisplay {
                 font-size: 12px;
                 color: #586069;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         </style>
     </head>
 
-    <body class="p-4 bg-gray-50">
-        <div id="app" class="space-y-4">
-            <header class="pb-2 border-b">
-                <h1 class="text-xl font-bold text-gray-800">
-                    Sticky Code Editor
-                </h1>
-                <p
-                    id="currentUrlDisplay"
-                    class="text-xs text-gray-500 truncate"
-                ></p>
+    <body>
+        <div id="app">
+            <header>
+                <h1>Sticky Code</h1>
+                <p id="currentUrlDisplay"></p>
             </header>
 
-            <section class="space-y-2">
-                <h2 class="text-sm font-semibold text-gray-700 section-header">
-                    Sticky CSS
-                </h2>
-                <textarea
-                    id="cssInput"
-                    placeholder="/* Enter your CSS here */"
-                    class="w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 shadow-inner"
-                ></textarea>
-            </section>
+            <div class="editor-container">
+                <div class="tabs">
+                    <button class="tab active" data-tab="css">CSS</button>
+                    <button class="tab" data-tab="js">JavaScript</button>
+                </div>
 
-            <section class="space-y-2">
-                <h2 class="text-sm font-semibold text-gray-700 section-header">
-                    Sticky JavaScript
-                </h2>
-                <textarea
-                    id="jsInput"
-                    class="code-editor"
-                    placeholder="Start typing code here... (runs when page is loaded)"
-                ></textarea>
-            </section>
+                <div class="tab-content active" id="css-tab">
+                    <textarea
+                        id="cssInput"
+                        placeholder="/* Enter your CSS here */"
+                    ></textarea>
+                </div>
 
-            <div class="flex items-center justify-between pt-2">
-                <button
-                    id="saveButton"
-                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-150 shadow-md"
-                >
-                    Save & Apply to Site
-                </button>
-                <span
-                    id="statusMessage"
-                    class="text-sm italic text-green-600 transition duration-300 opacity-0"
-                ></span>
+                <div class="tab-content" id="js-tab">
+                    <textarea
+                        id="jsInput"
+                        placeholder="/* Enter your JavaScript here */ (runs when page is loaded)"
+                    ></textarea>
+                </div>
             </div>
+        </div>
+
+        <div class="save-section">
+            <button id="saveButton">Save & Apply to Site</button>
+            <span id="statusMessage"></span>
         </div>
 
         <script src="popup.js"></script>
