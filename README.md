@@ -2,7 +2,7 @@
 
 A Chrome extension that allows you to inject and persist custom CSS and JavaScript code on specific websites.
 
-![Preview](./img/preview.png)
+<img src="./img/preview.png" alt="Preview" width="240" />
 
 ## Features
 
