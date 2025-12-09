@@ -68,8 +68,6 @@ This extension requires the following permissions:
 - `activeTab`: To identify which website you're currently viewing
 - `storage`: To save your custom code snippets
 - `scripting`: To inject your code into web pages
-- `tabs`: To manage and identify browser tabs
-- `webNavigation`: To detect when pages are loaded
 - `host_permissions (<all_urls>)`: To allow injection on any website you choose
 
 ## Development
