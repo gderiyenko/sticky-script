@@ -2,6 +2,8 @@
 
 A Chrome extension that allows you to inject and persist custom CSS and JavaScript code on specific websites.
 
+![Preview](./img/preview.png)
+
 ## Features
 
 - **Per-Site Code Injection**: Set different CSS and JavaScript snippets for each website
@@ -81,7 +83,7 @@ StickyExtension/
 ├── popup.js            # Popup logic and tab switching
 ├── content.js          # Code injection logic
 ├── background.js       # Background service worker
-└── icons/              # Extension icons
+└── img/                # Extension icons, demonstration images, etc.
 ```
 
 ### Building
@@ -90,7 +92,7 @@ No build process required. This is a plain JavaScript extension ready to load di
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) file for details
+MIT License - See [LICENSE](./LICENSE) for details
 
 ## Contributing
 
